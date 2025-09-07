@@ -1,0 +1,438 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow Pick - Premium Cosmetics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Poppins', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .product-card { transition: all 0.3s ease; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .cart-badge { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        .product-image { width: 100%; height: 200px; object-fit: cover; }
+        .hero-bg { background: linear-gradient(135deg, #ff6b6b 0%, #feca57 50%, #48dbfb 100%); }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                        <span class="text-2xl">✨</span>
+                    </div>
+                    <h1 class="text-2xl font-bold">Glow Pick</h1>
+                </div>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#" class="hover:text-pink-200 transition-colors">Home</a>
+                    <a href="#products" class="hover:text-pink-200 transition-colors">Products</a>
+                    <a href="#" class="hover:text-pink-200 transition-colors">About</a>
+                    <a href="#" class="hover:text-pink-200 transition-colors">Contact</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <button onclick="showCart()" class="relative p-2 hover:bg-white hover:bg-opacity-20 rounded-full transition-colors">
+                        <span class="text-xl">🛒</span>
+                        <span id="cart-count" class="cart-badge absolute -top-1 -right-1 bg-pink-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                    </button>
+                    <button class="bg-pink-500 hover:bg-pink-600 px-4 py-2 rounded-full transition-colors">Sign In</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-bg text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-5xl font-bold mb-6">Discover Your Perfect Glow ✨</h2>
+            <p class="text-xl mb-8 opacity-90">Premium cosmetics curated for your beauty journey</p>
+            <div class="flex justify-center space-x-4 mb-8">
+                <div class="bg-white bg-opacity-20 rounded-lg p-4">
+                    <span class="text-3xl block">💄</span>
+                    <span class="text-sm">Premium Makeup</span>
+                </div>
+                <div class="bg-white bg-opacity-20 rounded-lg p-4">
+                    <span class="text-3xl block">🧴</span>
+                    <span class="text-sm">Skincare</span>
+                </div>
+                <div class="bg-white bg-opacity-20 rounded-lg p-4">
+                    <span class="text-3xl block">🎨</span>
+                    <span class="text-sm">Beauty Tools</span>
+                </div>
+            </div>
+            <button onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})" class="bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-full text-lg font-semibold transition-colors shadow-lg">
+                Shop Now 🛍️
+            </button>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="bg-white py-8 shadow-sm">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center space-x-4">
+                    <span class="font-semibold text-gray-700">Filter by:</span>
+                    <select id="category-filter" class="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <option value="all">All Categories</option>
+                        <option value="foundation">Foundation</option>
+                        <option value="lipstick">Lipstick</option>
+                        <option value="eyeshadow">Eyeshadow</option>
+                        <option value="mascara">Mascara</option>
+                        <option value="blush">Blush</option>
+                        <option value="skincare">Skincare</option>
+                        <option value="concealer">Concealer</option>
+                        <option value="primer">Primer</option>
+                    </select>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="font-semibold text-gray-700">Sort by:</span>
+                    <select id="sort-filter" class="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <option value="name">Name</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="rating">Rating</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-16">
+        <div class="container mx-auto px-4">
+            <h3 class="text-3xl font-bold text-center mb-12 text-gray-800">Our Glow Picks 💫</h3>
+            <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Products will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4 max-h-96 overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Shopping Cart 🛒</h3>
+                <button onclick="hideCart()" class="text-gray-500 hover:text-gray-700 text-2xl">✕</button>
+            </div>
+            <div id="cart-items" class="space-y-3">
+                <!-- Cart items will be inserted here -->
+            </div>
+            <div class="border-t pt-4 mt-4">
+                <div class="flex justify-between items-center font-bold text-lg">
+                    <span>Total: </span>
+                    <span id="cart-total">₹0</span>
+                </div>
+                <button class="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-3 px-4 rounded-lg mt-4 hover:from-purple-600 hover:to-pink-600 transition-all font-semibold">
+                    Proceed to Checkout 💳
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section class="bg-gradient-to-r from-purple-100 to-pink-100 py-16">
+        <div class="container mx-auto px-4">
+            <h3 class="text-3xl font-bold text-center mb-12 text-gray-800">Why Choose Glow Pick?</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="text-5xl mb-4">🚚</div>
+                    <h4 class="text-xl font-semibold mb-2">Free Shipping</h4>
+                    <p class="text-gray-600">Free delivery on orders above ₹999</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl mb-4">🔄</div>
+                    <h4 class="text-xl font-semibold mb-2">Easy Returns</h4>
+                    <p class="text-gray-600">30-day hassle-free return policy</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl mb-4">✅</div>
+                    <h4 class="text-xl font-semibold mb-2">Authentic Products</h4>
+                    <p class="text-gray-600">100% genuine cosmetics guaranteed</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <span class="text-2xl">✨</span>
+                        <h4 class="text-xl font-bold">Glow Pick</h4>
+                    </div>
+                    <p class="text-gray-400">Your trusted partner for premium cosmetics and beauty essentials.</p>
+                    <div class="flex space-x-4 mt-4">
+                        <span class="text-2xl">🇮🇳</span>
+                        <span class="text-sm text-gray-400">Made with ❤️ in India</span>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="font-semibold mb-4">Quick Links</h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Returns</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold mb-4">Categories</h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Makeup</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Skincare</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Tools</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Accessories</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold mb-4">Follow Us</h5>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-2xl hover:text-pink-400 transition-colors">📘</a>
+                        <a href="#" class="text-2xl hover:text-pink-400 transition-colors">📷</a>
+                        <a href="#" class="text-2xl hover:text-pink-400 transition-colors">🐦</a>
+                        <a href="#" class="text-2xl hover:text-pink-400 transition-colors">📺</a>
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-sm text-gray-400">📞 1800-123-4567</p>
+                        <p class="text-sm text-gray-400">📧 hello@glowpick.in</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Glow Pick. All rights reserved. | Prices in Indian Rupees (₹)</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Product data with 60 different cosmetic products with real images and Indian Rupee prices
+        const products = [
+            {id: 1, name: "Fenty Beauty Pro Filt'r Foundation", category: "foundation", price: 3150, image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=400&fit=crop&crop=center", rating: 4.8, brand: "Fenty Beauty"},
+            {id: 2, name: "Charlotte Tilbury Pillow Talk Lipstick", category: "lipstick", price: 3070, image: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400&h=400&fit=crop&crop=center", rating: 4.9, brand: "Charlotte Tilbury"},
+            {id: 3, name: "Urban Decay Naked Eyeshadow Palette", category: "eyeshadow", price: 4480, image: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=400&h=400&fit=crop&crop=center", rating: 4.7, brand: "Urban Decay"},
+            {id: 4, name: "Benefit BADgal BANG! Mascara", category: "mascara", price: 2075, image: "https://images.unsplash.com/photo-1631214540242-5ce2c0b8c0c6?w=400&h=400&fit=crop&crop=center", rating: 4.6, brand: "Benefit"},
+            {id: 5, name: "NARS Orgasm Blush", category: "blush", price: 2490, image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&h=400&fit=crop&crop=center", rating: 4.8, brand: "NARS"},
+            {id: 6, name: "The Ordinary Niacinamide Serum", category: "skincare", price: 580, image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400&h=400&fit=crop&crop=center", rating: 4.5, brand: "The Ordinary"},
+            {id: 7, name: "Rare Beauty Soft Pinch Liquid Blush", category: "blush", price: 1660, image: "https://images.unsplash.com/photo-1583241800698-9c2eeabc5071?w=400&h=400&fit=crop&crop=center", rating: 4.7, brand: "Rare Beauty"},
+            {id: 8, name: "Glossier Cloud Paint", category: "blush", price: 1495, image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=400&fit=crop&crop=center", rating: 4.4, brand: "Glossier"},
+            {id: 9, name: "Huda Beauty Desert Dusk Palette", category: "eyeshadow", price: 5395, image: "https://images.unsplash.com/photo-1609205807107-e8ec2120f9de?w=400&h=400&fit=crop&crop=center", rating: 4.6, brand: "Huda Beauty"},
+            {id: 10, name: "MAC Ruby Woo Lipstick", category: "lipstick", price: 1575, image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop&crop=center", rating: 4.5, brand: "MAC"},
+            {id: 11, name: "Tarte Shape Tape Concealer", category: "concealer", price: 2240, image: "https://images.unsplash.com/photo-1567721913486-6585f069b332?w=400&h=400&fit=crop&crop=center", rating: 4.7, brand: "Tarte"},
+            {id: 12, name: "Too Faced Better Than Sex Mascara", category: "mascara", price: 2075, image: "https://images.unsplash.com/photo-1604654894610-df63bc536371?w=400&h=400&fit=crop&crop=center", rating: 4.5, brand: "Too Faced"},
+            {id: 13, name: "Anastasia Beverly Hills Brow Wiz", category: "eyeshadow", price: 1910, image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=400&fit=crop&crop=center", rating: 4.6, brand: "ABH"},
+            {id: 14, name: "Drunk Elephant C-Firma Serum", category: "skincare", price: 6640, image: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=center", rating: 4.4, brand: "Drunk Elephant"},
+            {id: 15, name: "Kylie Cosmetics Lip Kit", category: "lipstick", price: 2405, image: "https://images.unsplash.com/photo-1588159343745-445ae0b16383?w=400&h=400&fit=crop&crop=center", rating: 4.3, brand: "Kylie Cosmetics"},
+            {id: 16, name: "Pat McGrath Mothership Palette", category: "eyeshadow", price: 10624, image: "https://images.unsplash.com/photo-1583241800698-9c2eeabc5071?w=400&h=400&fit=crop&crop=center", rating: 4.9, brand: "Pat McGrath"},
+            {id: 17, name: "Maybelline Fit Me Foundation", category: "foundation", price: 664, image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&h=400&fit=crop&crop=center", rating: 4.2, brand: "Maybelline"},
+            {id: 18, name: "CeraVe Moisturizing Cream", category: "skincare", price: 1328, image: "https://images.unsplash.com/photo-1570194065650-d99fb4bedf0a?w=400&h=400&fit=crop&crop=center", rating: 4.6, brand: "CeraVe"},
+            {id: 19, name: "Dior Addict Lip Glow", category: "lipstick", price: 2905, image: "https://images.unsplash.com/photo-1631214540242-5ce2c0b8c0c6?w=400&h=400&fit=crop&crop=center", rating: 4.5, brand: "Dior"},
+            {id: 20, name: "Laneige Lip Sleeping Mask", category: "skincare", price: 1660, image: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=center", rating: 4.7, brand: "Laneige"},
+            {id: 21, name: "Morphe 35O Nature Glow Palette", category: "eyeshadow", price: 2075, image: "https://images.unsplash.com/photo-1609205807107-e8ec2120f9de?w=400&h=400&fit=crop&crop=center", rating: 4.4, brand: "Morphe"},
+            {id: 22, name: "L'Oréal Voluminous Lash Paradise", category: "mascara", price: 830, image: "https://images.unsplash.com/photo-1604654894610-df63bc536371?w=400&h=400&fit=crop&crop=center", rating: 4.3, brand: "L'Oréal"},
+            {id: 23, name: "Clinique Cheek Pop Blush", category: "blush", price: 1910, image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=400&fit=crop&crop=center", rating: 4.5, brand: "Clinique"},
+            {id: 24, name: "Estée Lauder Double Wear Foundation", category: "foundation", price: 3901, image: "https://images.unsplash.com/photo-1567721913486-6585f069b332?w=400&h=400&fit=crop&crop=center", rating: 4.6, brand: "Estée Lauder"},
+            {id: 25, name: "Jeffree Star Velour Liquid Lipstick", category: "lipstick", price: 1495, image: "https://images.unsplash.com/photo-1588159343745-445ae0b16383?w=400&h=400&fit=crop&crop=center", rating: 4.2, brand: "Jeffree Star"},
+            {id: 26, name: "Neutrogena Hydro Boost Serum", category: "skincare", price: 1577, image: "https://images.unsplash.com/photo-1570194065650-d99fb4bedf0a?w=400&h=400&fit=crop&crop=center", rating: 4.4, brand: "Neutrogena"},
+            {id: 27, name: "Milani Baked Blush", category: "blush", price: 747, image: "https://images.unsplash.com/photo-1583241800698-9c2eeabc5071?w=400&h=400&fit=crop&crop=center", rating: 4.3, brand: "Milani"},
+            {id: 28, name: "YSL Touche Éclat Concealer", category: "concealer", price: 3155, image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&h=400&fit=crop&crop=center", rating: 4.7, brand: "YSL"},
+            {id: 29, name: "Colourpop Super Shock Shadow", category: "eyeshadow", price: 498, image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=400&fit=crop&crop=center", rating: 4.2, brand: "ColourPop"},
+            {id: 30, name: "Essence Lash Princess Mascara", category: "mascara", price: 415, image: "https://images.unsplash.com/photo-1631214540242-5ce2c0b8c0c6?w=400&h=400&fit=crop&crop=center", rating: 4.4, brand: "Essence"},
+            {id: 31, name: "Becca Shimmering Skin Perfector", category: "foundation", price: 3155, image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=400&fit=crop&crop=center", rating: 4.6, brand: "Becca"},
+            {id: 32, name: "Bite Beauty Agave Lip Mask", category: "skincare", price: 2158, image: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=center", rating: 4.5, brand: "Bite Beauty"},
+            {id: 33, name: "Jaclyn Hill Eyeshadow Palette", category: "eyeshadow", price: 3155, image: "https://images.unsplash.com/photo-1609205807107-e8ec2120f9de?w=400&h=400&fit=crop&crop=center", rating: 4.3, brand: "Jaclyn Hill"},
+            {id: 34, name: "Revlon Super Lustrous Lipstick", category: "lipstick", price: 664, image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop&crop=center", rating: 4.1, brand: "Revlon"},
+            {id: 35, name: "Paula's Choice BHA Exfoliant", category: "skincare", price: 2490, image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400&h=400&fit=crop&crop=center", rating: 4.7, brand: "Paula's Choice"},
+            {id: 36, name: "Tarte Amazonian Clay Blush", category: "blush", price: 2407, image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=400&fit=crop&crop=center", rating: 4.6, brand: "Tarte"},
+            {id: 37, name: "IT Cosmetics CC+ Cream", category: "foundation", price: 3238, image: "https://images.unsplash.com/photo-1567721913486-6585f069b332?w=400&h=400&fit=crop&crop=center", rating: 4.5, brand: "IT Cosmetics"},
+            {id: 38, name: "Lancôme Hypnôse Mascara", category: "mascara", price: 2241, image: "https://images.unsplash.com/photo-1604654894610-df63bc536371?w=400&h=400&fit=crop&crop=center", rating: 4.4, brand: "Lancôme"},
+            {id: 39, name: "Pixi Glow Tonic", category: "skincare", price: 1245, image: "https://images.unsplash.com/photo-1570194065650-d99fb4bedf0a?w=400&h=400&fit=crop&crop=center", rating: 4.3, brand: "Pixi"},
+            {id: 40, name: "Smashbox Photo Finish Primer", category: "primer", price: 2988, image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=400&fit=crop&crop=center", rating: 4.5, brand: "Smashbox"},
+            {id: 41, name: "Stila Stay All Day Liquid Lipstick", category: "lipstick", price: 1826, image: "https://images.unsplash.com/photo-1588159343745-445ae0b16383?w=400&h=400&fit=crop&crop=center", rating: 4.4, brand: "Stila"},
+            {id: 42, name: "James Charles Eyeshadow Palette", category: "eyeshadow", price: 3238, image: "https://images.unsplash.com/photo-1583241800698-9c2eeabc5071?w=400&h=400&fit=crop&crop=center", rating: 4.2, brand: "Morphe"},
+            {id: 43, name: "Covergirl Waterproof Mascara", category: "mascara", price: 581, image: "https://images.unsplash.com/photo-1631214540242-5ce2c0b8c0c6?w=400&h=400&fit=crop&crop=center", rating: 4.1, brand: "CoverGirl"},
+            {id: 44, name: "Flower Beauty Blush Bombs", category: "blush", price: 747, image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&h=400&fit=crop&crop=center", rating: 4.3, brand: "Flower Beauty"},
+            {id: 45, name: "No7 Retinol Serum", category: "skincare", price: 2075, image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400&h=400&fit=crop&crop=center", rating: 4.4, brand: "No7"},
+            {id: 46, name: "Hourglass Ambient Lighting Powder", category: "foundation", price: 3818, image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=400&fit=crop&crop=center", rating: 4.7, brand: "Hourglass"},
+            {id: 47, name: "Lime Crime Venus Palette", category: "eyeshadow", price: 3155, image: "https://images.unsplash.com/photo-1609205807107-e8ec2120f9de?w=400&h=400&fit=crop&crop=center", rating: 4.3, brand: "Lime Crime"},
+            {id: 48, name: "Maybelline Baby Lips", category: "lipstick", price: 332, image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop&crop=center", rating: 4.0, brand: "Maybelline"},
+            {id: 49, name: "The INKEY List Hyaluronic Acid", category: "skincare", price: 664, image: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=center", rating: 4.5, brand: "The INKEY List"},
+            {id: 50, name: "e.l.f. Camo Concealer", category: "concealer", price: 498, image: "https://images.unsplash.com/photo-1567721913486-6585f069b332?w=400&h=400&fit=crop&crop=center", rating: 4.2, brand: "e.l.f."},
+            {id: 51, name: "Thrive Causemetics Mascara", category: "mascara", price: 1992, image: "https://images.unsplash.com/photo-1604654894610-df63bc536371?w=400&h=400&fit=crop&crop=center", rating: 4.6, brand: "Thrive Causemetics"},
+            {id: 52, name: "Glossier Boy Brow", category: "eyeshadow", price: 1328, image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=400&fit=crop&crop=center", rating: 4.4, brand: "Glossier"},
+            {id: 53, name: "Sunday Riley Good Genes", category: "skincare", price: 7055, image: "https://images.unsplash.com/photo-1570194065650-d99fb4bedf0a?w=400&h=400&fit=crop&crop=center", rating: 4.5, brand: "Sunday Riley"},
+            {id: 54, name: "Mented Cosmetics Lipstick", category: "lipstick", price: 1328, image: "https://images.unsplash.com/photo-1588159343745-445ae0b16383?w=400&h=400&fit=crop&crop=center", rating: 4.3, brand: "Mented"},
+            {id: 55, name: "Juvia's Place Eyeshadow Palette", category: "eyeshadow", price: 1660, image: "https://images.unsplash.com/photo-1583241800698-9c2eeabc5071?w=400&h=400&fit=crop&crop=center", rating: 4.4, brand: "Juvia's Place"},
+            {id: 56, name: "Honest Beauty Mascara", category: "mascara", price: 1245, image: "https://images.unsplash.com/photo-1631214540242-5ce2c0b8c0c6?w=400&h=400&fit=crop&crop=center", rating: 4.2, brand: "Honest Beauty"},
+            {id: 57, name: "Tower 28 BeachPlease Blush", category: "blush", price: 1660, image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=400&fit=crop&crop=center", rating: 4.5, brand: "Tower 28"},
+            {id: 58, name: "Tatcha Water Cream", category: "skincare", price: 5644, image: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=center", rating: 4.6, brand: "Tatcha"},
+            {id: 59, name: "Armani Luminous Silk Foundation", category: "foundation", price: 5312, image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=400&fit=crop&crop=center", rating: 4.8, brand: "Giorgio Armani"},
+            {id: 60, name: "Chanel Rouge Coco Lipstick", category: "lipstick", price: 3071, image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop&crop=center", rating: 4.7, brand: "Chanel"}
+        ];
+
+        let cart = [];
+        let filteredProducts = [...products];
+
+        function renderProducts() {
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = '';
+
+            filteredProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card bg-white rounded-lg shadow-md overflow-hidden';
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.src='https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=400&fit=crop&crop=center'; this.alt='Product Image';">
+                    <div class="p-4">
+                        <div class="text-xs text-purple-600 font-semibold mb-1">${product.brand}</div>
+                        <h4 class="font-semibold text-gray-800 mb-2 h-12 text-sm leading-tight">${product.name}</h4>
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="flex items-center">
+                                ${'⭐'.repeat(Math.floor(product.rating))}
+                                <span class="text-gray-500 text-xs ml-1">(${product.rating})</span>
+                            </div>
+                        </div>
+                        <p class="text-xl font-bold text-purple-600 mb-3">₹${product.price.toLocaleString('en-IN')}</p>
+                        <button onclick="addToCart(${product.id})" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 text-sm font-semibold">
+                            Add to Cart 🛒
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(productCard);
+            });
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({...product, quantity: 1});
+            }
+            
+            updateCartCount();
+            updateCartDisplay();
+            
+            // Show success message
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = 'Added! ✓';
+            button.classList.remove('from-purple-500', 'to-pink-500');
+            button.classList.add('bg-green-500');
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.classList.remove('bg-green-500');
+                button.classList.add('from-purple-500', 'to-pink-500');
+            }, 1000);
+        }
+
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').textContent = totalItems;
+        }
+
+        function updateCartDisplay() {
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="text-gray-500 text-center py-4">Your cart is empty 🛒</p>';
+                cartTotal.textContent = '₹0';
+                return;
+            }
+
+            cartItems.innerHTML = cart.map(item => `
+                <div class="flex items-center justify-between border-b pb-2">
+                    <div class="flex-1">
+                        <h5 class="font-semibold text-sm">${item.name}</h5>
+                        <p class="text-xs text-gray-500">${item.brand}</p>
+                        <p class="text-purple-600 font-semibold">₹${item.price.toLocaleString('en-IN')}</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="updateQuantity(${item.id}, -1)" class="bg-gray-200 hover:bg-gray-300 w-6 h-6 rounded-full text-xs font-bold">-</button>
+                        <span class="text-sm font-semibold">${item.quantity}</span>
+                        <button onclick="updateQuantity(${item.id}, 1)" class="bg-gray-200 hover:bg-gray-300 w-6 h-6 rounded-full text-xs font-bold">+</button>
+                    </div>
+                </div>
+            `).join('');
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartTotal.textContent = `₹${total.toLocaleString('en-IN')}`;
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(cartItem => cartItem.id !== productId);
+                }
+                updateCartCount();
+                updateCartDisplay();
+            }
+        }
+
+        function showCart() {
+            updateCartDisplay();
+            document.getElementById('cart-modal').classList.remove('hidden');
+        }
+
+        function hideCart() {
+            document.getElementById('cart-modal').classList.add('hidden');
+        }
+
+        function filterProducts() {
+            const category = document.getElementById('category-filter').value;
+            const sort = document.getElementById('sort-filter').value;
+
+            // Filter by category
+            if (category === 'all') {
+                filteredProducts = [...products];
+            } else {
+                filteredProducts = products.filter(p => p.category === category);
+            }
+
+            // Sort products
+            switch(sort) {
+                case 'price-low':
+                    filteredProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    filteredProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'name':
+                    filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'rating':
+                    filteredProducts.sort((a, b) => b.rating - a.rating);
+                    break;
+            }
+
+            renderProducts();
+        }
+
+        // Event listeners
+        document.getElementById('category-filter').addEventListener('change', filterProducts);
+        document.getElementById('sort-filter').addEventListener('change', filterProducts);
+
+        // Close cart when clicking outside
+        document.getElementById('cart-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideCart();
+            }
+        });
+
+        // Initial render
+        renderProducts();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97861929b3a03ff5',t:'MTc1Njc0MzY2MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
+
+
